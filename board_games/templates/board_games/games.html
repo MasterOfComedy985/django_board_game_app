@@ -1,0 +1,18 @@
+{% extends "board_games/base.html" %}
+
+{% block content %}
+
+    <p>Board Games</p>
+
+    <ul>
+        {% for game in games %}
+            <li>
+                <a href="{% url 'board_games:game' game.id %}">{{ game }}</a>
+            </li>
+        {% empty %}
+            <li>No games have been added yet.</li>
+        {% endfor %}
+    </ul>
+
+{% endblock content %}
+

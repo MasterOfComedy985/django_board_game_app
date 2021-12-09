@@ -1,0 +1,21 @@
+{% extends 'board_games/base.html' %}
+
+{% bock content %}
+
+    <p>Game: {{ game }}</p>
+
+    <p>Description:</p>
+    <ul>
+        {% for entry in entries %}
+            <li>
+                <p>{{ descrption.date_added|date:'M d, Y H:i' }}</p>
+                <p>{{ entry.text|linebreaks }}</p>
+            </li>
+        {% empty %}
+            <li>
+                No description has been added yet.
+            </li>
+        {%% enfor }
+    </ul>
+
+{% endblock content %}
