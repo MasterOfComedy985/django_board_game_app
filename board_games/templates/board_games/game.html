@@ -9,12 +9,15 @@
   <p>
     <a href="{% url 'board_games:new_description' game.id %}">Add a description</a>
   </p>
-  
+
   <ul>
       {% for description in descriptions %}
       <li>
           <p>{{ description.date_added|date:'M d, Y H:i' }}</p>
           <p>{{ description.text|linebreaks }}</p>
+          <p>
+            <a href="{% url 'board_games:edit_description' description.id %}">Edit description</a>
+          </p>
       </li>
       {% empty %}
         <li>There is no description for this board game yet.</li>

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 
-from .models import Game
+from .models import Game, Description
 from .forms import GameForm, DescriptionForm
 
 # Create your views here.
@@ -58,3 +58,21 @@ def new_description(request, game_id):
     # Display a blank or invalid form.
     context = {'game': game, 'form': form}
     return render(request, 'board_games/new_description.html', context)
+
+def edit_description(request, description_id):
+    """Edit an existing description."""
+    description = Description.objects.get(id=description_id)
+    game = description.game
+
+    if request.method != 'POST':
+        # Initial request; pre-fill form with the current description.
+        form = DescriptionForm(instance=description)
+    else:
+        # POST data submitted; process data.
+        form = DescriptionForm(instance=description, data=request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('board_games:game', game_id=game.id)
+    
+    context = {'description': description, 'game': game, 'form': form}
+    return render(request, 'board_games/edit_description.html', context)
