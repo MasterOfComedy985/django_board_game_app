@@ -6,7 +6,9 @@
 
 <ul>
     {% for game in games %}
-      <li>{{ game }}</li>
+      <li>{
+          <a href="{% url 'board_games:game' game.id %}">{{ game }}</a>
+      </li>
     {% empty %}
       <li>No board games have been added yet.</li>
     {% endfor %}
