@@ -1,6 +1,11 @@
 <p>
     <a href="{% url 'board_games:index' %}">Board Games</a> - 
-    <a href="{% url 'board_games:games' %}">Existing Board Games</a>
+    <a href="{% url 'board_games:games' %}">Existing Board Games</a> -
+    {% if user.is_authenticated %}
+        Hello, {{ user.username }}.
+    {% else %}
+        <a href="{% url 'users:login' %}">Log in</a>
+    {% endif %}
 </p>
 
 {% block content %}{% endblock content %}
