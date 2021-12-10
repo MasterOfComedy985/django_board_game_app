@@ -5,6 +5,11 @@
   <p>Game: {{ game }}</p>
 
   <p>Description:</p>
+
+  <p>
+    <a href="{% url 'board_games:new_description' game.id %}">Add a description</a>
+  </p>
+  
   <ul>
       {% for description in descriptions %}
       <li>
