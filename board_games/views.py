@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from .models import Game
+from .forms import GameForm
 
 # Create your views here.
 
@@ -18,6 +19,22 @@ def games(request):
 def game(request, game_id):
     """Show a single board game and its description."""
     game = Game.objects.get(id=game_id)
-    descriptions = Game.description_set.order_by('-date_added')
+    descriptions = game.description_set.order_by('-date_added')
     context = {'game': game, 'descriptions': descriptions}
     return render(request, 'board_games/game.html', context)
+
+def new_game(request):
+    """Add a new game."""
+    if request.method != 'POST':
+        # No data submitted; create a blank form.
+        form = GameForm()
+    else:
+        # POST data submitted; process data.
+        form = GameForm(data=request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('board_games:games')
+    
+    # Display a blank or invalid form.
+    context = {'form': form}
+    return render(request, 'board_games/new_game.html', context)
