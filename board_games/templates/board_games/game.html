@@ -2,26 +2,27 @@
 
 {% block content %}
 
-  <p>Game: {{ game }}</p>
+    <p>Game: {{ game }}</p> 
 
-  <p>Description:</p>
+    <p>Loaned by: {{ loaner }}</p>
 
-  <p>
-    <a href="{% url 'board_games:new_description' game.id %}">Add a description</a>
-  </p>
+    {% if game.loan_status == 'U' %}
+    <a href="{% url 'board_games:new_loaner' game.id %}">Loan Game</a>
+    {% else %}
+    {% endif %}
 
-  <ul>
-      {% for description in descriptions %}
-      <li>
-          <p>{{ description.date_added|date:'M d, Y H:i' }}</p>
-          <p>{{ description.text|linebreaks }}</p>
-          <p>
-            <a href="{% url 'board_games:edit_description' description.id %}">Edit description</a>
-          </p>
-      </li>
-      {% empty %}
-        <li>There is no description for this board game yet.</li>
-      {% endfor %}
-  </ul>
+    <ul>
+        {% for description in descriptions %}
+        <li>
+            <p>{{ description.date_added|date:'M d, Y H:i' }}</p>
+            <p>{{ description.text|linebreaks }}</p>
+            <p>
+              <a href="{% url 'board_games:edit_description' description.id %}">Edit description</a>
+            </p>
+        </li>
+        {% empty %}
+          <li>There is no description for this board game yet.</li>
+        {% endfor %}
+    </ul>
 
 {% endblock content %}

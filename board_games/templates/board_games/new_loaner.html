@@ -1,0 +1,12 @@
+{% extends "board_games/base.html" %}
+
+{% block content %}
+  <p>Name of the loaner:</p>
+
+  <form action="{% url 'board_games:new_loaner' game.id %}" method='post'>
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button name="submit">Loan</button>
+  </form>
+
+{% endblock content %}

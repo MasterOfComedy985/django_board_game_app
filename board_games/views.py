@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
 
-from .models import Game, Description
-from .forms import GameForm, DescriptionForm
+
+from .models import Game, Description, Loaner
+from .forms import GameForm, DescriptionForm, LoanerForm
+
 
 # Create your views here.
 
@@ -76,3 +78,35 @@ def edit_description(request, description_id):
     
     context = {'description': description, 'game': game, 'form': form}
     return render(request, 'board_games/edit_description.html', context)
+
+
+def new_loaner(request,game_id):
+    """Add a new loaner"""
+    game = Game.objects.get(id=game_id)
+
+    if request.method != 'POST':
+        # No data submitted; create a blank form.
+        form = LoanerForm()
+    else:
+        # POST data submitted; process data.
+        form = LoanerForm(data=request.POST)
+        if form.is_valid():
+            game.loan_status = 'U'
+            new_loaner = game.loaner
+            new_loaner = form.save(commit=False)
+            new_loaner.game = game
+            new_loaner.save()
+
+            return redirect('board_games:game', game_id=game_id)
+    
+    # Display a blank or invalid form.
+    context = {'game': game, 'form': form}
+    return render(request, 'board_games/new_loaner.html', context)
+
+#def game_returned(request):
+#    instance = Loaner.objects.get(id=id)
+#    instance.delete()
+#
+#    context = {'instance': instance}
+#    return render(request, 'board_games/game.html', context)
+
