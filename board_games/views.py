@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 
 from .models import Game, Description, Loaner
 from .forms import GameForm, DescriptionForm, LoanerForm
+from django.contrib.auth.decorators import login_required  # -emilia
 
 
 # Create your views here.
@@ -25,6 +26,7 @@ def game(request, game_id):
     context = {'game': game, 'descriptions': descriptions}
     return render(request, 'board_games/game.html', context)
 
+@login_required
 def new_game(request):
     """Add a new game."""
     if request.method != 'POST':
@@ -41,6 +43,7 @@ def new_game(request):
     context = {'form': form}
     return render(request, 'board_games/new_game.html', context)
 
+@login_required
 def new_description(request, game_id):
     """Add a new description for a partular board game."""
     game = Game.objects.get(id=game_id)
@@ -61,6 +64,7 @@ def new_description(request, game_id):
     context = {'game': game, 'form': form}
     return render(request, 'board_games/new_description.html', context)
 
+@login_required
 def edit_description(request, description_id):
     """Edit an existing description."""
     description = Description.objects.get(id=description_id)
@@ -80,6 +84,7 @@ def edit_description(request, description_id):
     return render(request, 'board_games/edit_description.html', context)
 
 
+@login_required
 def new_loaner(request,game_id):
     """Add a new loaner"""
     game = Game.objects.get(id=game_id)

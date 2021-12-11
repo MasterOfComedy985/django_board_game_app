@@ -1,5 +1,6 @@
 from django.core.exceptions import DisallowedHost
 from django.db import models
+from django.contrib.auth.models import User #-emilia
 
 # Create your models here.
 
@@ -37,6 +38,7 @@ class Loaner(models.Model):
     game = models.ForeignKey(Game, on_delete = models.CASCADE)
     text = models.CharField(max_length=20)
     loan_time = models.DateTimeField(auto_now_add=True)
+    owner = models.ForeignKey(User)  #-emilia
 
     def __str__(self):
         return self.text
