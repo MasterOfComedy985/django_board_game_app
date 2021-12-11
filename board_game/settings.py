@@ -35,10 +35,10 @@ INSTALLED_APPS = [
     # My apps
     'board_games',
     'users',
-    
-    # Third party apps.
+
+    # Third party apps
     'bootstrap4',
-    
+        
     # Default django apps
     'django.contrib.admin',
     'django.contrib.auth',
@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
 ]
 
 MIDDLEWARE = [

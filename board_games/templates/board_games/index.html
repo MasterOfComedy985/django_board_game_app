@@ -1,5 +1,16 @@
 {% extends "board_games/base.html" %}
 
-{% block content %}
-    <p>A website for keeping track of loaning board games.</p>
-{% endblock content %}
+{% block page_header %}
+  <div class="jumbotron">
+      <h1 class="display-3">Step in to the world of board games.</h1>
+
+      <p class="lead"> Add your board games to the site, add descriptions to them, 
+          and keep track of the loans.</p>
+    
+      <a class="btn btn-lg btn-primary"href="{% url 'users:login' %}"
+            role="button">Log in &raquo;</a>
+    
+      <a class="btn btn-lg btn-primary" href="{% url 'users:register' %}"
+            role="button">Register &raquo;</a>
+  </div>
+{% endblock page_header %}

@@ -1,8 +1,10 @@
 {% extends 'board_games/base.html' %}
 
-{% block content %}
+{% block page_header %}
+  <h3>{{ game }}</h3>
+{% endblock page_header %}
 
-    <p>Game: {{ game }}</p> 
+{% block content %}
 
     <p>Loaned by: {{ loaner }}</p>
 
@@ -14,18 +16,19 @@
       <a href="{% url 'board_games:new_loaner' game.id %}">Loan Game</a>
     {% endif %}
 
-    <ul>
-        {% for description in descriptions %}
-        <li>
-            <p>{{ description.date_added|date:'M d, Y H:i' }}</p>
-            <p>{{ description.text|linebreaks }}</p>
-            <p>
-              <a href="{% url 'board_games:edit_description' description.id %}">Edit description</a>
-            </p>
-        </li>
-        {% empty %}
-          <li>There is no description for this board game yet.</li>
-        {% endfor %}
-    </ul>
+    {% for description in descriptions %}
+      <div class="card mb-3">
+        <h4 class="card-header">
+          {{ entry.date_added|date:'M d, Y H:i' }}
+          <small><a href="{% url 'board_games:edit_description' description.id %}">
+            Edit description</a></small>
+        </h4>
+        <div class="card-body">
+          {{ description.text|linebreaks }}
+        </div>
+      </div>
+    {% empty %}
+      <p>There is no description for this board game yet.</p>
+    {% endfor %}
 
 {% endblock content %}
