@@ -34,11 +34,14 @@ class Description(models.Model):
         return self.text[:50] + "..."
 
 class Loaner(models.Model):
-    """Name of the current loaner"""
+    """Loaner of a board game"""
     game = models.ForeignKey(Game, on_delete = models.CASCADE)
     text = models.CharField(max_length=20)
-    loan_time = models.DateTimeField(auto_now_add=True)
-    owner = models.ForeignKey(User)  #-emilia
+    date_added = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name_plural = 'loaners'
 
     def __str__(self):
-        return self.text
+        """Return a string representation of the model."""
+        return self.text[:50] + "..."

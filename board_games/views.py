@@ -23,7 +23,8 @@ def game(request, game_id):
     """Show a single board game and its description."""
     game = Game.objects.get(id=game_id)
     descriptions = game.description_set.order_by('-date_added')
-    context = {'game': game, 'descriptions': descriptions}
+    loaners = game.loaner_set.order_by('-date_added')
+    context = {'game': game, 'descriptions': descriptions, 'loaners': loaners}
     return render(request, 'board_games/game.html', context)
 
 @login_required
@@ -85,16 +86,17 @@ def edit_description(request, description_id):
 
 
 @login_required
-def new_loaner(request,game_id):
-    """Add a new loaner"""
+def new_loaner(request, game_id):
+    """Add a new description for a partular board game."""
     game = Game.objects.get(id=game_id)
 
     if request.method != 'POST':
-        # No data submitted; create a blank form.
+        # No data submitted, create a blank form.
         form = LoanerForm()
     else:
-        # POST data submitted; process data.
+        # POST data submitted, process data.
         form = LoanerForm(data=request.POST)
+
         if form.is_valid():
             game.loan_status = 'U'
             new_loaner = game.loaner
@@ -108,10 +110,29 @@ def new_loaner(request,game_id):
     context = {'game': game, 'form': form}
     return render(request, 'board_games/new_loaner.html', context)
 
-#def game_returned(request):
+@login_required
+def edit_loaner(request, loaner_id):
+    """Edit an existing description."""
+    loaner = Loaner.objects.get(id=loaner_id)
+    game = loaner.game
+
+    if request.method != 'POST':
+        # Initial request; pre-fill form with the current description.
+        form = LoanerForm(instance=loaner)
+    else:
+        # POST data submitted; process data.
+        form = LoanerForm(instance=loaner, data=request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('board_games:game', game_id=game.id)
+    
+    context = {'loaner': loaner, 'game': game, 'form': form}
+    return render(request, 'board_games/edit_loaner.html', context)
+
+
+    #def game_returned(request):
 #    instance = Loaner.objects.get(id=id)
 #    instance.delete()
 #
 #    context = {'instance': instance}
 #    return render(request, 'board_games/game.html', context)
-

@@ -23,6 +23,9 @@ urlpatterns = [
     # Page for editing a description
     path('edit_description/<int:description_id>/', views.edit_description, name='edit_description'),
 
-    # Page for adding a new loaner for a specific game
+    # Page for adding a loaner
     path('new_loaner/<int:game_id>/', views.new_loaner, name='new_loaner'),
+
+    # Page for editing a loaner
+    path('edit_loaner/<int:loaner_id>/', views.edit_loaner, name='edit_loaner'),
 ]

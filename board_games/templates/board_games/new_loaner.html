@@ -1,12 +1,13 @@
 {% extends "board_games/base.html" %}
 
 {% block content %}
-  <p>Name of the loaner:</p>
+<p><a href="{% url 'board_games:new_loaner' game.id %}">{{ game }}</a></p>
 
-  <form action="{% url 'board_games:new_loaner' game.id %}" method='post'>
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button name="submit">Loan</button>
-  </form>
+<p>Add a loaner:</p>
+<form action="{% url 'board_games:new_loaner' game.id %}" method='post'>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button name='submit'>Add description</button>
+</form>
 
 {% endblock content %}

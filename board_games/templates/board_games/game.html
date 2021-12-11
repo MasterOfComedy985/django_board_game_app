@@ -6,20 +6,17 @@
 
 {% block content %}
 
-    <p>Loaned by: {{ loaner }}</p>
-
-    {% if game.loan_status == 'U' %}
-      Game is being loaned by {{ loaner }} <!--tai {{ loaner.text }}-->
-      <a href="{% url 'board_games:game_returned' game.id %}">Return Game</a>
-    {% else %}
-      Game is available
-      <a href="{% url 'board_games:new_loaner' game.id %}">Loan Game</a>
-    {% endif %}
+  {% for loaner in loaners %}
+    Game is being loaned by:{{ loaner.text|linebreaks }} since: {{ loaner.date_added|date:'M d, Y H:i' }}
+  {% empty %}
+    <p>There are no loaners for this board game yet.</p>
+    <a href="{% url 'board_games:new_loaner' game.id %}">Add new loaner</a>
+  {% endfor %}
 
     {% for description in descriptions %}
       <div class="card mb-3">
         <h4 class="card-header">
-          {{ entry.date_added|date:'M d, Y H:i' }}
+          {{ description.date_added|date:'M d, Y H:i' }}
           <small><a href="{% url 'board_games:edit_description' description.id %}">
             Edit description</a></small>
         </h4>
@@ -29,6 +26,8 @@
       </div>
     {% empty %}
       <p>There is no description for this board game yet.</p>
+      <small><a href="{% url 'board_games:new_description' game.id %}">
+        Add new description</a></small>
     {% endfor %}
 
 {% endblock content %}
