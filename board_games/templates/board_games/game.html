@@ -7,7 +7,10 @@
 {% block content %}
 
   {% for loaner in loaners %}
-    Game is being loaned by:{{ loaner.text|linebreaks }} since: {{ loaner.date_added|date:'M d, Y H:i' }}
+      Game is being loaned by:{{ loaner.text|linebreaks }} 
+      since: {{ loaner.date_added|date:'M d, Y H:i' }}
+      <a href="{% url 'board_games:return_game' loaner.id %}">Return game</a>
+
   {% empty %}
     <p>There are no loaners for this board game yet.</p>
     <a href="{% url 'board_games:new_loaner' game.id %}">Add new loaner</a>

@@ -1,0 +1,7 @@
+{% extends "board_games/base.html" %}
+
+{% block content %}
+
+  <p><a href="{% url 'board_games:game' game.id %}">You have returned {{ game }}</a></p>
+
+{% endblock content %}

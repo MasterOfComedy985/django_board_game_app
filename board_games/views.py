@@ -98,8 +98,6 @@ def new_loaner(request, game_id):
         form = LoanerForm(data=request.POST)
 
         if form.is_valid():
-            game.loan_status = 'U'
-            new_loaner = game.loaner
             new_loaner = form.save(commit=False)
             new_loaner.game = game
             new_loaner.save()
@@ -111,26 +109,19 @@ def new_loaner(request, game_id):
     return render(request, 'board_games/new_loaner.html', context)
 
 @login_required
-def edit_loaner(request, loaner_id):
+def return_game(request, loaner_id):
     """Edit an existing description."""
     loaner = Loaner.objects.get(id=loaner_id)
     game = loaner.game
 
-    if request.method != 'POST':
-        # Initial request; pre-fill form with the current description.
-        form = LoanerForm(instance=loaner)
-    else:
-        # POST data submitted; process data.
-        form = LoanerForm(instance=loaner, data=request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('board_games:game', game_id=game.id)
-    
-    context = {'loaner': loaner, 'game': game, 'form': form}
-    return render(request, 'board_games/edit_loaner.html', context)
+    instance = Loaner.objects.get(id=loaner_id)
+    instance.delete()
+
+    context = {'loaner': loaner, 'game': game}
+    return render(request, 'board_games/return_game.html', context)
 
 
-    #def game_returned(request):
+#def edit_loaner(request):
 #    instance = Loaner.objects.get(id=id)
 #    instance.delete()
 #
