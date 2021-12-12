@@ -38,7 +38,9 @@ def new_game(request):
         # POST data submitted; process data.
         form = GameForm(data=request.POST)
         if form.is_valid():
-            form.save()
+            new_game = form.save(commit=False)
+            new_game.owner = request.user
+            new_game.save()
             return redirect('board_games:games')
     
     # Display a blank or invalid form.
