@@ -20,4 +20,4 @@ class LoanerForm(forms.ModelForm):
         model = Loaner
         fields = ['text']
         labels = {'text': ''}
-        widgets = {'text': forms.Textarea(attrs={'cols':80})}
+        widgets = {'text': forms.Textarea(attrs={'cols':25, 'rows':1})}

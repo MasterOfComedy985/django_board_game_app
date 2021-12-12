@@ -12,6 +12,8 @@ class Game(models.Model):
     def __str__(self):
         return self.text
 
+    owner = models.ForeignKey(User, on_delete=models.CASCADE) #-emilia
+
 class Description(models.Model):
     """Description of a board game"""
     game = models.ForeignKey(Game, on_delete = models.CASCADE)

@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from .models import Game, Description, Loaner
 from .forms import GameForm, DescriptionForm, LoanerForm
 from django.contrib.auth.decorators import login_required  # -emilia
+from django.http import HttpResponseRedirect, Http404
 
 
 # Create your views here.
@@ -70,6 +71,8 @@ def edit_description(request, description_id):
     """Edit an existing description."""
     description = Description.objects.get(id=description_id)
     game = description.game
+    if game.owner != request.user:
+        raise Http404
 
     if request.method != 'POST':
         # Initial request; pre-fill form with the current description.
@@ -113,6 +116,8 @@ def return_game(request, loaner_id):
     """Edit an existing description."""
     loaner = Loaner.objects.get(id=loaner_id)
     game = loaner.game
+    if game.owner != request.user:
+        raise Http404
 
     instance = Loaner.objects.get(id=loaner_id)
     instance.delete()

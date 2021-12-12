@@ -7,7 +7,7 @@
 <form action="{% url 'board_games:new_loaner' game.id %}" method='post'>
     {% csrf_token %}
     {{ form.as_p }}
-    <button name='submit'>Add description</button>
+    <button name='submit'>Loan</button>
 </form>
 
 {% endblock content %}

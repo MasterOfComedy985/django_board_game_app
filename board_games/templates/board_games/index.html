@@ -6,11 +6,15 @@
 
       <p class="lead"> Add your board games to the site, add descriptions to them, 
           and keep track of the loans.</p>
-    
+
+      {% if user.is_authenticated %}
+        <a class="nav-link" href="{% url 'board_games:games'%}">See which board games are available</a>
+      {% else %}
       <a class="btn btn-lg btn-primary"href="{% url 'users:login' %}"
             role="button">Log in &raquo;</a>
     
       <a class="btn btn-lg btn-primary" href="{% url 'users:register' %}"
             role="button">Register &raquo;</a>
+      {% endif %}
   </div>
 {% endblock page_header %}

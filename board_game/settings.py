@@ -134,3 +134,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # My settings  -emilia
 LOGIN_URL = '/users/login'
+
+# Settings for django-bootstrap4 -emilia
+BOOTSTRAP4 = {
+    'include_jquery': True,
+}
